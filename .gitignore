@@ -33,3 +33,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Database files - these will be reconstructed
+db/
+
+# API files - will be public upon official release. Proper protections haven't been implemented yet
+/pages/api/

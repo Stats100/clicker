@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/navbar";
 import { Link } from "@nextui-org/link";
 import { Head } from "./head";
+import { SiteConfig, siteConfig } from "@/config/site";
 
 export default function DefaultLayout({
 	children,
@@ -18,11 +19,11 @@ export default function DefaultLayout({
 				<Link
 					isExternal
 					className="flex items-center gap-1 text-current"
-					href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
+					href={siteConfig.links.github}
 					title="nextui.org homepage"
 				>
-					<span className="text-default-600">Powered by</span>
-					<p className="text-primary">NextUI</p>
+					<span className="text-default-600">Version</span>
+					<p className="text-primary">{siteConfig.version}</p>
 				</Link>
 			</footer>
 		</div>
