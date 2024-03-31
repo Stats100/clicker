@@ -1,0 +1,54 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import '@fontsource/ubuntu'
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta property="og:title" content={title} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://clicker.stats100.xyz" />
+		<meta property="og:image" content="/Main.png" />
+		<meta property="og:description" content={description} />
+		<meta name="theme-color" content="#ffc0cb" />
+
+		<!-- Include this to make the og:image larger -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+	</head>
+	<body>
+		<ViewTransitions />
+		<slot />
+	</body>
+</html>
+<style is:global>
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 224, 204, 250;
+		--accent-dark: 49, 10, 101;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			white 60%
+		);
+	}
+	html {
+		font-family: Ubuntu;
+		background: #13151a;
+		background-size: 224px;
+	}
+</style>
