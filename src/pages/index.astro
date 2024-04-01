@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import CustomChart from "../components/Chart";
-import React, { useState, useEffect } from "react";
 ---
 
 <Layout title="Stats100 Clicker" description="The Clicker for Stats100.xyz">
@@ -16,10 +15,11 @@ import React, { useState, useEffect } from "react";
 			> is still available. <br />
 			(this doesn't work btw)
 		</p>
-		<CustomChart
-			client:only
-			fetchClicks
-		/>
+		<b>Odometer</b><br />
+		<button id="clickButton" type="button"
+			><strong>Click Me!</strong></button
+		>
+		<CustomChart client:only fetchClicks />
 		<ul role="list" class="link-card-grid">
 			<Card
 				href="/analytics"
@@ -38,9 +38,15 @@ import React, { useState, useEffect } from "react";
 			/>
 		</ul>
 		<script>
-			setInterval(() => {
-				console.log("test");
-			}, 100);
+			const clickButton = document.getElementById("clickButton");
+
+			if (clickButton) {
+				clickButton.addEventListener("click", clickRequest);
+			}
+
+			function clickRequest() {
+				fetch("/api/clicked");
+			}
 		</script>
 	</main>
 </Layout>
@@ -101,8 +107,24 @@ import React, { useState, useEffect } from "react";
 	}
 	.link-card-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(48ch, 1fr));
+		grid-template-columns: repeat(auto-fit, min(100%));
 		gap: 2rem;
 		padding: 0;
+	}
+
+	button {
+		font-family: Ubuntu;
+		min-width: 100%;
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		padding: 1.5rem;
+		border-radius: 8px;
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
 	}
 </style>
