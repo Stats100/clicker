@@ -42,7 +42,7 @@ const CustomChart = ({ fetchClicks, clientData }: CustomChartProps) => {
 
         if (fetchClicks) {
             fetchData();
-            const interval = setInterval(fetchData, 1000);
+            const interval = setInterval(fetchData, 2000);
             return () => clearInterval(interval);
         } else if (clientData) {
             setData(clientData);
