@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HighchartsChart, Chart, XAxis, YAxis, Title, LineSeries, Tooltip, HighchartsProvider } from 'react-jsx-highcharts';
 import Highcharts from 'highcharts';
 import OdometerComponent from './Odometer'; // Import the Odometer component
+import ButtonComponent from './Button';
 
 interface DataPoint {
     x: number;
@@ -57,6 +58,9 @@ const CustomChart = ({ fetchClicks, clientData }: CustomChartProps) => {
         <div>
             {/* Render the Odometer component with the current odometer value */}
             <OdometerComponent value={odometerValue} />
+
+            <br /><br />
+            <ButtonComponent />
 
             {/* Render the Highcharts chart */}
             <HighchartsProvider Highcharts={Highcharts}>

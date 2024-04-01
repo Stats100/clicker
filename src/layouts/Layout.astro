@@ -1,6 +1,6 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-import '@fontsource/ubuntu'
+import { ViewTransitions } from "astro:transitions";
+import "@fontsource/ubuntu";
 
 interface Props {
 	title: string;
@@ -51,5 +51,20 @@ const { title, description } = Astro.props;
 		font-family: Ubuntu;
 		background: #13151a;
 		background-size: 224px;
+	}
+
+	/* width */
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: rgb(var(--accent-dark));
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: rgb(var(--accent));
 	}
 </style>

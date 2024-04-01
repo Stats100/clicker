@@ -2,9 +2,8 @@ import { Elysia, t, type ElysiaConfig, type RouteSchema } from 'elysia';
 import { swagger } from '@elysiajs/swagger';
 import { cors } from '@elysiajs/cors';
 
-import client from 'https';
-import fs from 'fs';
-// import { sqlite3 } from 'sqlite3';
+import * as database from '../../db/database.ts'
+database.initDb()
 
 async function checkFrequencyValue(value: any) {
     if ((value == 'secondly' ||
@@ -100,6 +99,13 @@ const app = new Elysia({ prefix: '/api' })
         }
     })
     .get('/analytics/year/:year/:frequency', async ({ set }) => {
+        set.status = 501;
+        return {
+            success: false,
+            error: 'Not implemented'
+        }
+    })
+    .get('/analytics/raw', async ({ set }) => {
         set.status = 501;
         return {
             success: false,

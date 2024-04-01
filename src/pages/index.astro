@@ -15,10 +15,10 @@ import CustomChart from "../components/Chart";
 			> is still available. <br />
 			(this doesn't work btw)
 		</p>
-		<button id="clickButton" type="button"
-			><strong>Click Me! (updates my original clicker currently)</strong
-			></button
-		>
+
+		<div class="b">
+			<b>Clicks:</b>
+		</div>
 		<CustomChart client:only fetchClicks />
 		<ul role="list" class="link-card-grid">
 			<Card
@@ -37,18 +37,6 @@ import CustomChart from "../components/Chart";
 				body="We're open source!"
 			/>
 		</ul>
-		<script>
-			const clickButton = document.getElementById("clickButton");
-
-			if (clickButton) {
-				clickButton.addEventListener("click", clickRequest);
-			}
-
-			function clickRequest() {
-				// fetch("/api/clicked");
-				fetch('https://api-gc.galvindev.me.uk/clicked')
-			}
-		</script>
 	</main>
 </Layout>
 
@@ -112,20 +100,9 @@ import CustomChart from "../components/Chart";
 		gap: 2rem;
 		padding: 0;
 	}
-
-	button {
-		font-family: Ubuntu;
+	.b {
 		min-width: 100%;
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(
-			rgba(var(--accent-dark), 66%),
-			rgba(var(--accent-dark), 33%)
-		);
-		padding: 1.5rem;
-		border-radius: 8px;
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
+		text-align: center;
+		font-size: 1.5em;
 	}
 </style>
