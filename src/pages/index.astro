@@ -1,26 +1,35 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import CustomChart from "../components/Chart";
+import React, { useState, useEffect } from "react";
 ---
 
-<Layout title='uwu' description='The Clicker for Stats100.xyz'>
+<Layout title="Stats100 Clicker" description="The Clicker for Stats100.xyz">
 	<main>
 		<h1>Stats100 <span class="text-gradient">Clicker</span></h1>
 		<p class="instructions">
-			A new and improved Global Clicker, coming soon. (and in Astro!) <br/>
-			In the meantime, my original <a href="https://gc.galvindev.me.uk">Clicker</a> is still available. <br/>
+			A new and improved Global Clicker, coming soon. (and in Astro!) <br
+			/>
+			In the meantime, my original <a href="https://gc.galvindev.me.uk"
+				>Clicker</a
+			> is still available. <br />
 			(this doesn't work btw)
 		</p>
+		<CustomChart
+			client:only
+			fetchClicks
+		/>
 		<ul role="list" class="link-card-grid">
+			<Card
+				href="/analytics"
+				title="Analytics 📈"
+				body="Analytics to come in V2"
+			/>
 			<Card
 				href="/api/swagger"
 				title="API 📃"
 				body="Know how to use the API :)"
-			/>
-			<Card
-				href="#"
-				title="Analytics 📈"
-				body="Analytics to come in V2"
 			/>
 			<Card
 				href="https://github.com/Stats100/clicker"
@@ -28,6 +37,11 @@ import Card from '../components/Card.astro';
 				body="We're open source!"
 			/>
 		</ul>
+		<script>
+			setInterval(() => {
+				console.log("test");
+			}, 100);
+		</script>
 	</main>
 </Layout>
 
@@ -67,7 +81,10 @@ import Card from '../components/Card.astro';
 	.instructions {
 		margin-bottom: 2rem;
 		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
 		padding: 1.5rem;
 		border-radius: 8px;
 	}

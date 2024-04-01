@@ -19,7 +19,14 @@
     "@fontsource/ubuntu": "^5.0.12",
     "astro": "^4.5.12",
     "astro-robots-txt": "^1.0.0",
+    "highcharts": "^11.4.0",
+    "highstock-release": "^6.0.4",
+    "react-jsx-highcharts": "^5.0.1",
+    "react-odometer": "^0.0.1",
     "sqlite3": "^5.1.7",
     "typescript": "^5.4.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1"
   }
 }
