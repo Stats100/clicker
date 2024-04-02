@@ -22,12 +22,12 @@ const CustomChart = ({ fetchClicks, clientData }: CustomChartProps) => {
         const fetchData = async () => {
             try {
                 // TODO: Change to "/clicks" when the API is set up
-                const response = await fetch('https://api-gc.galvindev.me.uk/clicks');
+                const response = await fetch('/api/clicks');
                 const jsonData = await response.json();
 
                 const newDataPoint = {
                     x: new Date().getTime(),
-                    y: jsonData[0].row_count,
+                    y: jsonData.clicks,
                 };
 
                 // 60 minutes = 3600 seconds, however 1 request every 2 seconds = 1800 datapoints for an hour
@@ -35,7 +35,7 @@ const CustomChart = ({ fetchClicks, clientData }: CustomChartProps) => {
                 setData(prevData => [...prevData.slice(-1799), newDataPoint]);
 
                 // Update the odometer value
-                setOdometerValue(jsonData[0].row_count);
+                setOdometerValue(jsonData.clicks);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

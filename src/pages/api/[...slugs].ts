@@ -3,7 +3,6 @@ import { swagger } from '@elysiajs/swagger';
 import { cors } from '@elysiajs/cors';
 
 import * as database from '../../db/database.ts'
-database.initDb()
 
 async function checkFrequencyValue(value: any) {
     if ((value == 'secondly' ||
@@ -112,8 +111,8 @@ const app = new Elysia({ prefix: '/api' })
             error: 'Not implemented'
         }
     })
-    .get('/clicks', async () => { return { clicks: 0 } })
-    .get('/clicked', async () => { return { clicked: true } })
+    .get('/clicks', async () => { return { clicks: parseInt(await database.getClicks()) } })
+    .get('/clicked', async () => { database.increaseClicks(); return { clicked: true } })
 
 const handle = ({ request }: { request: Request }) => app.handle(request);
 

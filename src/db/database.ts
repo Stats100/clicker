@@ -7,8 +7,15 @@ const DB_FILE_PATH = './src/db/data/db.db';
 const DB_DIRECTORY_PATH = path.dirname(DB_FILE_PATH);
 
 let db:any;
+let isInit:boolean = false;
+let clicksToAdd:number = 0
 
-export function initDb() {
+function initDb() {
+    if (isInit) {
+        console.log('initDb() was called again')
+        return
+    }
+
     // Create the directory if it doesn't exist
     if (!fs.existsSync(DB_DIRECTORY_PATH)) {
         fs.mkdirSync(DB_DIRECTORY_PATH, { recursive: true });
@@ -44,4 +51,44 @@ export function initDb() {
         console.error('Error initialising database:', error);
         throw error;
     }
+    isInit = true;
 }
+initDb()
+
+export async function getClicks(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+        fs.readFile(CLICKS_FILE_PATH, 'utf8', (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+export async function increaseClicks() {
+    clicksToAdd += 1
+}
+
+setInterval(async () => {
+    try {
+        // Read the file asynchronously
+        const fileContents = await fs.promises.readFile(CLICKS_FILE_PATH, 'utf8');
+    
+        // Parse the file contents as a number
+        let currentValue = parseInt(fileContents, 10);
+    
+        // Add the addend to the current value
+        currentValue += clicksToAdd;
+    
+        // Write the updated value back to the file
+        await fs.promises.writeFile(CLICKS_FILE_PATH, currentValue.toString(), 'utf8');
+    
+        console.log(`Updated value (${currentValue}) has been written to ${CLICKS_FILE_PATH}`);
+    } catch (error) {
+        console.error('Error:', error);
+        throw error; // Rethrow the error to propagate it to the caller
+    }
+    clicksToAdd = 0
+}, 100)

@@ -10,8 +10,7 @@ const ButtonComponent = () => {
         }
 
         function clickRequest() {
-            // fetch("/api/clicked");
-            fetch('https://api-gc.galvindev.me.uk/clicked');
+            fetch("/api/clicked");
         }
 
         return () => {
@@ -24,7 +23,7 @@ const ButtonComponent = () => {
     return (
         <div>
             <button id="clickButton" type="button">
-                <strong>Click Me! (updates my original clicker currently)</strong>
+                <strong>Click Me!</strong>
             </button>
         </div>
     );
