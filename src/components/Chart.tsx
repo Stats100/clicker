@@ -21,7 +21,6 @@ const CustomChart = ({ fetchClicks, clientData }: CustomChartProps) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // TODO: Change to "/clicks" when the API is set up
                 const response = await fetch('/api/clicks');
                 const jsonData = await response.json();
 
