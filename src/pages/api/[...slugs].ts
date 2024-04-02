@@ -1,17 +1,17 @@
-import { Elysia, t, type ElysiaConfig, type RouteSchema } from 'elysia';
+import { Elysia } from 'elysia';
 import { swagger } from '@elysiajs/swagger';
 import { cors } from '@elysiajs/cors';
 
-import * as database from '../../db/database.ts'
+import * as database from '../../db/database.ts';
 
-async function checkFrequencyValue(value: any) {
+async function checkFrequencyValue(value: string) {
     if ((value == 'secondly' ||
         value == 'minutely' ||
         value == 'hourly' ||
         value == 'daily' ||
         value == 'weekly' ||
         value == 'monthly')) {
-        return true
+        return true;
     }
     return false;
 }
@@ -22,7 +22,7 @@ const app = new Elysia({ prefix: '/api' })
     .onError(({ code, error, set }) => {
         if (code === 'NOT_FOUND') {
             set.status = 404;
-            return 'Not found :('
+            return { message: 'Not found :(', error };
         }
     })
     .get('/', () => ':3')
@@ -32,7 +32,7 @@ const app = new Elysia({ prefix: '/api' })
      * Ok there's quite a lot of analytics I want to implement, so... gonna wait until the basics are done
      */
     .get('/analytics/last/:range/:period/:frequency', async ({
-        params, set
+        params, set,
     }: {
         params: {
             range: number,
@@ -46,8 +46,8 @@ const app = new Elysia({ prefix: '/api' })
             set.status = 404;
             return {
                 success: false,
-                error: 'range is less than or equal to 0'
-            }
+                error: 'range is less than or equal to 0',
+            };
         }
         if (!(params.period == 'seconds' ||
             params.period == 'minutes' ||
@@ -58,61 +58,61 @@ const app = new Elysia({ prefix: '/api' })
             set.status = 404;
             return {
                 success: false,
-                error: 'period must be one of these values: seconds, minutes, hours, days, weeks, months'
-            }
+                error: 'period must be one of these values: seconds, minutes, hours, days, weeks, months',
+            };
         }
 
         if (!(await checkFrequencyValue(params.frequency))) {
             set.status = 404;
             return {
                 success: false,
-                error: 'frequency must be one of these values: secondly, minutely, hourly, daily, weekly, monthly'
-            }
+                error: 'frequency must be one of these values: secondly, minutely, hourly, daily, weekly, monthly',
+            };
         }
 
         set.status = 501;
         return {
             success: false,
-            error: 'Not implemented. You have valid parameters, however we are unable to respond successfully'
-        }
+            error: 'Not implemented. You have valid parameters, however we are unable to respond successfully',
+        };
     })
     .get('/analytics/range/:start/:end/:frequency', async ({ set }) => {
         set.status = 501;
         return {
             success: false,
-            error: 'Not implemented'
-        }
+            error: 'Not implemented',
+        };
     })
     .get('/analytics/day/:date/:frequency', async ({ set }) => {
         set.status = 501;
         return {
             success: false,
-            error: 'Not implemented'
-        }
+            error: 'Not implemented',
+        };
     })
     .get('/analytics/month/:month/:frequency', async ({ set }) => {
         set.status = 501;
         return {
             success: false,
-            error: 'Not implemented'
-        }
+            error: 'Not implemented',
+        };
     })
     .get('/analytics/year/:year/:frequency', async ({ set }) => {
         set.status = 501;
         return {
             success: false,
-            error: 'Not implemented'
-        }
+            error: 'Not implemented',
+        };
     })
     .get('/analytics/raw', async ({ set }) => {
         set.status = 501;
         return {
             success: false,
-            error: 'Not implemented'
-        }
+            error: 'Not implemented',
+        };
     })
-    .get('/clicks', async () => { return { clicks: parseInt(await database.getClicks()) } })
-    .get('/clicked', async () => { database.increaseClicks(); return { clicked: true } })
+    .get('/clicks', async () => { return { clicks: parseInt(await database.getClicks()) }; })
+    .get('/clicked', async () => { database.increaseClicks(); return { clicked: true }; });
 
 const handle = ({ request }: { request: Request }) => app.handle(request);
 

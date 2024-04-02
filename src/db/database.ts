@@ -2,19 +2,19 @@ import sqlite3 from 'sqlite3';
 import * as fs from 'fs';
 import path from 'path';
 
-const CLICKS_FILE_PATH = './src/db/data/clicks.txt'
+const CLICKS_FILE_PATH = './src/db/data/clicks.txt';
 const DB_FILE_PATH = './src/db/data/db.db';
 const DB_DIRECTORY_PATH = path.dirname(DB_FILE_PATH);
 
 let db: any;
 let isInit: boolean = false;
-let clicksToAdd: number = 0
-let dbLastValueSaved: number = 0
+let clicksToAdd: number = 0;
+let dbLastValueSaved: number = 0;
 
 function initDb() {
     if (isInit) {
-        console.log('initDb() was called again')
-        return
+        console.log('initDb() was called again');
+        return;
     }
 
     // Create the directory if it doesn't exist
@@ -25,10 +25,11 @@ function initDb() {
     // ./data/clicks.txt
     try {
         if (!fs.existsSync(CLICKS_FILE_PATH)) {
-            fs.writeFileSync(CLICKS_FILE_PATH, '0')
+            fs.writeFileSync(CLICKS_FILE_PATH, '0');
         }
-    } catch (error) {
-        console.error('Error initalising clicks.txt: ', error)
+    }
+    catch (error) {
+        console.error('Error initalising clicks.txt: ', error);
         throw error;
     }
 
@@ -48,20 +49,22 @@ function initDb() {
                 );     
             `);
         });
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error initialising database:', error);
         throw error;
     }
     isInit = true;
 }
-initDb()
+initDb();
 
 export async function getClicks(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         fs.readFile(CLICKS_FILE_PATH, 'utf8', (err, data) => {
             if (err) {
                 reject(err);
-            } else {
+            }
+            else {
                 resolve(data);
             }
         });
@@ -69,7 +72,7 @@ export async function getClicks(): Promise<string> {
 }
 
 export async function increaseClicks() {
-    clicksToAdd += 1
+    clicksToAdd += 1;
 }
 
 setInterval(async () => {
@@ -88,28 +91,31 @@ setInterval(async () => {
         await fs.promises.writeFile(CLICKS_FILE_PATH, currentValue.toString(), 'utf8');
 
         console.log(`Updated value (${currentValue}) has been written to ${CLICKS_FILE_PATH}`);
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error:', error);
-        throw error; // Rethrow the error to propagate it to the caller
+        throw error;
     }
 
-    clicksToAdd = 0
-}, 100)
+    clicksToAdd = 0;
+}, 100);
 
 setInterval(async () => {
     const fileContents = parseInt(await fs.promises.readFile(CLICKS_FILE_PATH, 'utf8'), 10);
     if (dbLastValueSaved == fileContents) return;
     dbLastValueSaved = fileContents;
     try {
-        db.run('INSERT INTO clicks (epochTime, clicks) VALUES (?, ?)', [new Date().getTime(), fileContents], function (err: any) {
+        db.run('INSERT INTO clicks (epochTime, clicks) VALUES (?, ?)', [new Date().getTime(), fileContents], function(err: any) {
             if (err) {
                 console.error('Error inserting data:', err);
-            } else {
+            }
+            else {
                 console.log('New row inserted successfully');
             }
         });
-    } catch (e) {
-        console.error('Error:', e);
-        throw e; // Rethrow the error to propagate it to the caller
     }
-}, 1000)
+    catch (e) {
+        console.error('Error:', e);
+        throw e;
+    }
+}, 1000);

@@ -21,10 +21,10 @@ const { title, description } = Astro.props;
 		<meta property="og:title" content={title} />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://clicker.stats100.xyz" />
-		<!-- TODO: Add OG image -->
-		<meta property="og:image" content="" />
+		<meta property="og:image" content="/preview.png" />
 		<meta property="og:description" content={description} />
 		<meta name="theme-color" content="#ffc0cb" />
+		<link rel="shortcut icon" href="favicon.svg">
 
 		<!-- Include this to make the og:image larger -->
 		<meta name="twitter:card" content="summary_large_image" />
@@ -66,5 +66,71 @@ const { title, description } = Astro.props;
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
 		background: rgb(var(--accent));
+	}
+
+	/* Move the CSS for the pages into the layout */
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		width: 220px;
+		height: auto;
+		z-index: -1;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, min(100%));
+		gap: 2rem;
+		padding: 0;
+	}
+	.b {
+		min-width: 100%;
+		text-align: center;
+		font-size: 1.5em;
 	}
 </style>
