@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: '14'
 
       - name: Install dependencies
         run: npm install
@@ -38,7 +38,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: '14'
 
       - name: Install dependencies
         run: npm install
@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: astro-build
-          path: dist  # Assuming the build output directory is 'dist'
+          path: dist
 
   get-version:
     name: Get Version From package.json
@@ -77,6 +77,8 @@ jobs:
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ needs.get-version.outputs.current_version }}
           release_name: Release ${{ needs.get-version.outputs.current_version }}
@@ -85,8 +87,10 @@ jobs:
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist
+          asset_path: dist  # Assuming the build output directory is 'dist'
           asset_name: astro-build-${{ needs.get-version.outputs.current_version }}.zip
           asset_content_type: application/zip
