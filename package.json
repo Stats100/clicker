@@ -1,13 +1,15 @@
 {
   "name": "",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "astro dev --port 7001",
-    "start": "astro dev --port 7001",
-    "build": "astro check && astro build",
-    "preview": "astro preview --port 7002",
-    "astro": "astro"
+    "dev": "echo Linting... && npm run lint && echo Running... &&  astro dev --port 7001",
+    "start": "echo Linting... && npm run lint && echo Running... &&  astro dev --port 7001",
+    "build": "echo Linting... && npm run lint && echo Building... &&  astro check && astro build",
+    "preview": "echo Linting... && npm run lint && echo Running... &&  astro preview --port 7002",
+    "astro": "astro",
+    "lint": "eslint . --ext .ts --ext .tsx",
+    "lint:fix": "eslint . --ext .ts --ext .tsx --fix"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
@@ -18,7 +20,7 @@
     "@elysiajs/swagger": "^1.0.3",
     "@fontsource/ubuntu": "^5.0.12",
     "@types/sqlite3": "^3.1.11",
-    "astro": "^4.5.12",
+    "astro": "^4.5.13",
     "astro-robots-txt": "^1.0.0",
     "highcharts": "^11.4.0",
     "highstock-release": "^6.0.4",
@@ -29,6 +31,10 @@
     "typescript": "^5.4.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1"
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-astro": "^0.33.1"
   }
 }

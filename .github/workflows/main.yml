@@ -1,0 +1,92 @@
+name: ESLint Check and Releasing
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+  build:
+    name: Build with Astro
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build with Astro
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: astro-build
+          path: dist  # Assuming the build output directory is 'dist'
+
+  get-version:
+    name: Get Version From package.json
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get current version from package.json
+        id: get-version
+        run: echo "::set-output name=current_version::$(node -e "console.log(require('./package.json').version)")"
+
+  release:
+    name: Release
+    needs: [get-version, build]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && contains(github.event.head_commit.message, 'Release')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ needs.get-version.outputs.current_version }}
+          release_name: Release ${{ needs.get-version.outputs.current_version }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist
+          asset_name: astro-build-${{ needs.get-version.outputs.current_version }}.zip
+          asset_content_type: application/zip

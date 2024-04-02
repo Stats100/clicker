@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HighchartsChart, Chart, XAxis, YAxis, Title, LineSeries, Tooltip, HighchartsProvider } from 'react-jsx-highcharts';
 import Highcharts from 'highcharts';
-import OdometerComponent from './Odometer'; // Import the Odometer component
+import OdometerComponent from './Odometer';
 import ButtonComponent from './Button';
 
 interface DataPoint {
@@ -16,7 +16,7 @@ interface CustomChartProps {
 
 const CustomChart = ({ fetchClicks, clientData }: CustomChartProps) => {
     const [data, setData] = useState<DataPoint[]>([]);
-    const [odometerValue, setOdometerValue] = useState(0); // State to hold the odometer value
+    const [odometerValue, setOdometerValue] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,7 +35,8 @@ const CustomChart = ({ fetchClicks, clientData }: CustomChartProps) => {
 
                 // Update the odometer value
                 setOdometerValue(jsonData.clicks);
-            } catch (error) {
+            }
+            catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
@@ -44,7 +45,8 @@ const CustomChart = ({ fetchClicks, clientData }: CustomChartProps) => {
             fetchData();
             const interval = setInterval(fetchData, 2000);
             return () => clearInterval(interval);
-        } else if (clientData) {
+        }
+        else if (clientData) {
             setData(clientData);
             // If client data is provided, set the odometer value
             if (clientData.length > 0) {

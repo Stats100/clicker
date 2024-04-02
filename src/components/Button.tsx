@@ -10,7 +10,7 @@ const ButtonComponent = () => {
         }
 
         function clickRequest() {
-            fetch("/api/clicked");
+            fetch('/api/clicked');
         }
 
         return () => {
