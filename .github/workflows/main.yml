@@ -56,6 +56,9 @@ jobs:
     name: Get Version From package.json
     runs-on: ubuntu-latest
 
+    outputs:
+      version: ${{ steps.get-version.outputs.current_version }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -80,17 +83,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ needs.get-version.outputs.current_version }}
-          release_name: Release ${{ needs.get-version.outputs.current_version }}
+          tag_name: ${{ needs.get-version.outputs.version }}
+          release_name: Release ${{ needs.get-version.outputs.version }}
           draft: false
           prerelease: false
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist  # Assuming the build output directory is 'dist'
-          asset_name: astro-build-${{ needs.get-version.outputs.current_version }}.zip
-          asset_content_type: application/zip
