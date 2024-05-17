@@ -22,7 +22,7 @@
     "@types/sqlite3": "^3.1.11",
     "astro": "^4.5.13",
     "astro-robots-txt": "^1.0.0",
-    "highcharts": "^11.4.0",
+    "highcharts": "^11.4.1",
     "highstock-release": "^6.0.4",
     "react-jsx-highcharts": "^5.0.1",
     "react-odometer": "^0.0.1",
