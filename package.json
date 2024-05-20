@@ -12,7 +12,7 @@
     "lint:fix": "eslint . --ext .ts --ext .tsx --fix"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
+    "@astrojs/check": "^0.7.0",
     "@astrojs/node": "^8.2.5",
     "@astrojs/react": "^3.3.4",
     "@astrojs/sitemap": "^3.1.2",
