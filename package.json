@@ -18,7 +18,7 @@
     "@astrojs/sitemap": "^3.1.2",
     "@elysiajs/cors": "^1.0.2",
     "@elysiajs/swagger": "^1.0.3",
-    "@fontsource/ubuntu": "^5.0.12",
+    "@fontsource/ubuntu": "^5.0.13",
     "@types/sqlite3": "^3.1.11",
     "astro": "^4.5.13",
     "astro-robots-txt": "^1.0.0",
