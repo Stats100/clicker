@@ -20,7 +20,7 @@
     "@elysiajs/swagger": "^1.0.3",
     "@fontsource/ubuntu": "^5.0.12",
     "@types/sqlite3": "^3.1.11",
-    "astro": "^4.5.13",
+    "astro": "^4.9.2",
     "astro-robots-txt": "^1.0.0",
     "highcharts": "^11.4.1",
     "highstock-release": "^6.0.4",
